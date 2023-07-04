@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#DEEF9A"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".TestIntroFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:id="@+id/IntroText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="54dp"
+        android:text="Word Test: Day 1"
+        android:textSize="24dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="14dp"
+        android:text="Quantity of Questions:"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="22dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="14dp">
+
+        <ImageView
+            android:id="@+id/minusBtn"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_gravity="start"
+            android:src="@drawable/baseline_arrow_left_24" />
+
+        <TextView
+            android:id="@+id/QuestionsQuantity"
+            android:layout_width="112dp"
+            android:layout_height="72dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="20"
+            android:textColor="#E60A0A0A"
+            android:textSize="32sp" />
+
+        <ImageView
+            android:id="@+id/plusBtn"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_gravity="right"
+            android:src="@drawable/baseline_arrow_right_24" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/testStartBtn"
+        android:layout_width="144dp"
+        android:layout_height="64dp"
+        android:text="Start!"
+        android:textSize="16sp" />
+
+</LinearLayout>

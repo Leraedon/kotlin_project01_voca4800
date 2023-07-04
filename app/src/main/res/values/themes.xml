@@ -1,0 +1,16 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.VocaApplication" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/yellow_theme</item>
+        <item name="colorPrimaryVariant">@color/yellow_theme2</item>
+        <item name="colorOnPrimary">@color/cyan_theme2</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/violet_theme</item>
+        <item name="colorSecondaryVariant">@color/violet_theme2</item>
+        <item name="colorOnSecondary">@color/cyan_theme</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">#F3F895</item>
+        <!-- Customize your theme here. -->
+    </style>
+</resources>

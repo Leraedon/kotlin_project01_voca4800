@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:background="#DEEF9A"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="DAY SELECT"
+            android:textColor="#044546"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#E5FDB9"
+        android:fillViewport="true"
+        android:padding="8dp"
+        android:scrollbars="none">
+
+        <!--<androidx.gridlayout.widget.GridLayout
+            android:id="@+id/days_grid"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:orientation="horizontal"
+            app:columnCount="4">
+
+
+        </androidx.gridlayout.widget.GridLayout>-->
+        <TableLayout
+            android:id="@+id/days_table"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TableRow>
+                <Button
+                    android:id="@+id/dayall_btn"
+                    android:layout_height="76dp"
+                    android:layout_width="match_parent"
+                    android:layout_margin="8dp"
+                    android:text="ALL"
+                    android:textSize="26sp"
+                    android:textStyle="bold"
+                    android:layout_gravity="fill_horizontal"
+                    />
+            </TableRow>
+        </TableLayout>
+
+
+
+
+
+
+
+    </androidx.core.widget.NestedScrollView>
+
+
+
+
+</LinearLayout>

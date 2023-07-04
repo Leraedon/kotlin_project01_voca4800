@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:id="@+id/testBody"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#DEEF9A"
+    tools:context=".WordTestFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+    <LinearLayout
+        android:id="@+id/questionLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="40dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/introText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="14dp"
+            android:gravity="center"
+            android:text="Choose the antonym of the following word:"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:padding="20dp"
+            app:cardBackgroundColor="#F9A7CC"
+            app:cardCornerRadius="22dp"
+            app:cardElevation="8dp">
+
+            <TextView
+                android:id="@+id/subjectWord"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="56dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginRight="56dp"
+                android:layout_marginBottom="24dp"
+                android:gravity="center"
+                android:text="TextView"
+                android:textColor="#FC59A6"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/choiceLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/questionLayout"
+        android:layout_alignParentBottom="false"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_margin="6dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/answerButton1"
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+
+                android:text="Button" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_margin="6dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/answerButton2"
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+
+                android:text="Button" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_margin="6dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/answerButton3"
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+
+                android:text="Button" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_margin="6dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/answerButton4"
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+
+                android:text="Button" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/resultText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/processText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="32dp"
+        android:text="Correct!"
+        android:textColor="#00D324"
+        android:textSize="19sp" />
+
+    <TextView
+        android:id="@+id/processText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="false"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="false"
+        android:layout_marginBottom="32dp"
+        android:gravity="center"
+        android:text="1 / 20"
+        android:textSize="19sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/nextButton"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="false"
+        android:layout_centerVertical="false"
+        android:src="@drawable/baseline_arrow_right_24" />
+</RelativeLayout>

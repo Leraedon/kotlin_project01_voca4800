@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/result_layout"
+    android:layout_width="match_parent"
+    android:layout_height="24dp"
+    android:layout_margin="6dp"
+    android:background="@drawable/result_recycler">
+
+    <TextView
+        android:id="@+id/test_num"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="No." />
+
+    <TextView
+        android:id="@+id/subject_word"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:text="Subject" />
+
+    <TextView
+        android:id="@+id/answer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:text="Answer" />
+
+    <TextView
+        android:id="@+id/selected"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:text="Selected" />
+</LinearLayout>
