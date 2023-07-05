@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+        app:key="color"
+        app:title="단어 박스 색상"
+        android:entries="@array/setting_color"
+        app:entryValues="@array/setting_color_values"
+        />
+    <ListPreference
+        app:key="timer"
+        app:title="퀴즈 타이머 사용"
+        android:entries="@array/setting_timer"
+        app:entryValues="@array/setting_timer_values"
+        />
+</PreferenceScreen>

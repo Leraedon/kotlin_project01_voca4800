@@ -49,6 +49,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.settingBtn.setOnClickListener {
+            val intent: Intent = Intent(this, SettingActivity::class.java)
+            startActivity(intent)
+        }
+
         //today's word
         val jsonString = assets.open("words.json").reader().readText()
         val jsonArray = JSONArray(jsonString)

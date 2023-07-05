@@ -13,6 +13,7 @@ import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -158,6 +159,21 @@ class WordListActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
             val binding = (holder as MyViewHolder).binding
             prefs = PreferenceUtil(context)
+            val prefs2 = PreferenceManager.getDefaultSharedPreferences(context)
+            when(prefs2.getString("color", "Teal")) {
+                "Teal" -> {
+                    binding.WordLayout.background = getDrawable(context, R.drawable.round_recycler)
+                    Log.d("Leraedon", "0")
+                }
+                "Purple" -> {
+                    binding.WordLayout.background = getDrawable(context, R.drawable.round_recycler_purple)
+                    Log.d("Leraedon", "1")
+                }
+                "Red" -> {
+                    binding.WordLayout.background = getDrawable(context, R.drawable.round_recycler_red)
+                    Log.d("Leraedon", "2")
+                }
+            }
 
             binding.wordNum.text = dataList[position].num.toString()
             binding.wordTitle.text = dataList[position].word
