@@ -22,5 +22,9 @@ class SettingFragment : PreferenceFragmentCompat() {
             Log.d("Leraedon", "preference key:${preference.key}, newValue: ${newValue}")
             true
         }
+        timerPreference?.setOnPreferenceChangeListener { preference, newValue ->
+            Log.d("Leraedon", "preference key:${preference.key}, newValue: ${newValue}")
+            true
+        }
     }
 }

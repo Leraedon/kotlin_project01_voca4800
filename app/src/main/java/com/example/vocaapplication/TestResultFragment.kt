@@ -25,6 +25,7 @@ class TestResultFragment : Fragment() {
     private var previous_answords: ArrayList<String> = arrayListOf()
     private var selected_answers: ArrayList<Int> = arrayListOf()
     private var result_datas = ArrayList<ResultData>()
+    private val TIMED_OUT = 4801
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,13 +65,18 @@ class TestResultFragment : Fragment() {
                     var answer = subjectObject.getJSONArray("definitions").toArrayList()
                     if(answer.size > 3) answer = answer.slice(0..2) as ArrayList<String>
 
-                    val selectedObject = jsonArray.getJSONObject(selected_answers[seqNum])
-                    var selected = selectedObject.getJSONArray("definitions").toArrayList()
-                    if(selected.size >3) selected = selected.slice(0..2) as ArrayList<String>
+                    if(selected_answers[seqNum] == TIMED_OUT) {
+                        val newResultData: ResultData = ResultData(seqNum+1, subject, answer.toString(), "Timed Out")
+                        result_datas.add(newResultData)
+                    } else {
+                        val selectedObject = jsonArray.getJSONObject(selected_answers[seqNum])
+                        var selected = selectedObject.getJSONArray("definitions").toArrayList()
+                        if(selected.size >3) selected = selected.slice(0..2) as ArrayList<String>
+                        val newResultData: ResultData = ResultData(seqNum+1, subject, answer.toString(), selected.toString())
+                        result_datas.add(newResultData)
+                    }
 
                     seqNum++
-                    val newResultData: ResultData = ResultData(seqNum, subject, answer.toString(), selected.toString())
-                    result_datas.add(newResultData)
                 }
             }
             "synonym_test" -> {
@@ -89,7 +95,9 @@ class TestResultFragment : Fragment() {
                     //if(answer.size > 3) answer = answer.slice(0..2) as ArrayList<String>
 
                     lateinit var selected: String
-                    if(index == selected_answers[seqNum]) {
+                    if(selected_answers[seqNum] == TIMED_OUT) {
+                        selected = "Timed Out"
+                    } else if(index == selected_answers[seqNum]) {
                         selected = previous_answords[seqNum]
                     } else {
                         val selectedObject = jsonArray.getJSONObject(selected_answers[seqNum])
@@ -104,7 +112,7 @@ class TestResultFragment : Fragment() {
                 }
             }
             "antonym_test" -> {
-                binding.resultIntroText.text = "Day ${daynum} Antonym Test Result:"
+                binding.resultIntroText.text = "Day ${daynum} ~ ${daynum?.plus(4)} Antonym Test Result:"
 
                 val jsonString = context?.assets?.open("words.json")?.reader()?.readText()
                 val jsonArray = JSONArray(jsonString)
@@ -119,7 +127,9 @@ class TestResultFragment : Fragment() {
                     //if(answer.size > 3) answer = answer.slice(0..2) as ArrayList<String>
 
                     lateinit var selected: String
-                    if (index == selected_answers[seqNum]) {
+                    if(selected_answers[seqNum] == TIMED_OUT) {
+                        selected = "Timed Out"
+                    } else if (index == selected_answers[seqNum]) {
                         selected = previous_answords[seqNum]
                     } else {
                         val selectedObject = jsonArray.getJSONObject(selected_answers[seqNum])

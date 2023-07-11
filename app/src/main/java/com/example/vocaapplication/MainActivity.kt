@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
         //today's word
         val jsonString = assets.open("words.json").reader().readText()
         val jsonArray = JSONArray(jsonString)
-        val randomIndex: Int = Random().nextInt(3999)
+        val randomIndex: Int = Random().nextInt(4799)
         val jsonObject = jsonArray.getJSONObject(randomIndex)
         val todayWord = jsonObject.getString("word")
         val todayDef = jsonObject.getJSONArray("definitions")

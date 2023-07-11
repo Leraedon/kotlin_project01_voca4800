@@ -38,7 +38,7 @@ class TestIntroFragment : Fragment() {
                 max_quantity = 20
             }
             "antonym_test" -> {
-                binding.IntroText.text = "Antonym Test: Day ${daynum}"
+                binding.IntroText.text = "Antonym Test: Day ${daynum} ~ ${daynum?.plus(4)}"
                 binding.QuestionsQuantity.text = "10"
                 max_quantity = 10
             }

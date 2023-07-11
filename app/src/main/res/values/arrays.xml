@@ -12,7 +12,11 @@
     </string-array>
     <string-array name="setting_timer">
         <item>None</item>
+        <item>5s</item>
+        <item>6s</item>
+        <item>8s</item>
         <item>10s</item>
+        <item>12s</item>
         <item>15s</item>
         <item>20s</item>
         <item>30s</item>
@@ -20,7 +24,11 @@
     </string-array>
     <string-array name="setting_timer_values">
         <item>None</item>
+        <item>5</item>
+        <item>6</item>
+        <item>8</item>
         <item>10</item>
+        <item>12</item>
         <item>15</item>
         <item>20</item>
         <item>30</item>

@@ -1,19 +1,24 @@
 package com.example.vocaapplication
 
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.preference.PreferenceManager
 import com.example.vocaapplication.databinding.FragmentWordTestBinding
 import org.json.JSONArray
 import kotlin.random.Random
 
 class WordTestFragment : Fragment() {
     lateinit var binding: FragmentWordTestBinding
+    lateinit var prefs: SharedPreferences
+    lateinit var countDownTimer: CountDownTimer
     private var daynum: Int? = null
     private var quantity: Int? = null
     private var minWordIndex: Int? = null
@@ -22,6 +27,7 @@ class WordTestFragment : Fragment() {
     private var correct_answers_count: Int? = null
     private var previous_answers: ArrayList<Int> = arrayListOf()
     private var selected_answers: ArrayList<Int> = arrayListOf()
+    private val TIMED_OUT = 4801
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -141,6 +147,29 @@ class WordTestFragment : Fragment() {
         val word = jsonObject.getString("word")
         binding.subjectWord.text = word
 
+        prefs = context?.let { PreferenceManager.getDefaultSharedPreferences(it) }!!
+        val timerValue = prefs?.getString("timer", "None")
+
+        if(timerValue == "None") {
+            binding.countDown.visibility = View.GONE
+            //Log.d("Leraedon", "1")
+        } else {
+            binding.countDown.visibility = View.VISIBLE
+            binding.countDown.text = timerValue
+            //Log.d("Leraedon", "2")
+            countDownTimer = object : CountDownTimer((timerValue?.toLong()?.times(1000))!!, 1000) {
+                override fun onTick(p0: Long) {
+                    binding.countDown.text = (p0 / 1000).toString()
+                }
+
+                override fun onFinish() {
+                    timedOut(answerIndex)
+                }
+
+            }.start()
+
+        }
+
         //배열을 다시 섞어서 4개 선지에 랜덤하게 뜻을 배치
         randomList = randomList.shuffled()
         setWordTestAnswer(binding.answerButton1, randomList[0], answerIndex)
@@ -181,6 +210,8 @@ class WordTestFragment : Fragment() {
 
         button.text = displayDefs.joinToString()
         button.setOnClickListener {
+            prefs = context?.let { PreferenceManager.getDefaultSharedPreferences(it) }!!
+            if(prefs?.getString("timer", "None") != "None") countDownTimer.cancel()
             val buttons = arrayListOf(binding.answerButton1, binding.answerButton2, binding.answerButton3, binding.answerButton4)
             // 다음 퀴즈로 넘어가기 전까지 클릭 이벤트 제거
             for(btn in buttons)  btn.isClickable = false
@@ -203,6 +234,31 @@ class WordTestFragment : Fragment() {
             selected_answers.add(index)
         }
     }
+
+    private fun timedOut(answerIndex: Int) {
+        prefs = context?.let { PreferenceManager.getDefaultSharedPreferences(it) }!!
+        if(prefs?.getString("timer", "None") != "None") countDownTimer.cancel()
+
+        val jsonString = context?.assets?.open("words.json")?.reader()?.readText()
+        val jsonArray = JSONArray(jsonString)
+
+        val buttons = arrayListOf(binding.answerButton1, binding.answerButton2, binding.answerButton3, binding.answerButton4)
+        // 다음 퀴즈로 넘어가기 전까지 클릭 이벤트 제거
+        for(btn in buttons) {
+            btn.isClickable = false
+            btn.setBackgroundColor(Color.rgb(225, 30, 0))
+        }
+        binding.resultText.text = "Timed Out!\n" +
+                "Correct Answer: ${jsonArray.getJSONObject(answerIndex).getJSONArray("definitions")}"
+        binding.resultText.setTextColor(Color.rgb(225, 30, 0))
+        // 결과 텍스트와 다음 퀴즈로 넘어가기 버튼 활성화
+        binding.nextButton.visibility = View.VISIBLE
+        binding.resultText.visibility = View.VISIBLE
+        questions_count = questions_count!! + 1
+        previous_answers.add(answerIndex)
+        selected_answers.add(TIMED_OUT)
+    }
+
 
     companion object {
         /**

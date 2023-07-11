@@ -8,11 +8,15 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
+import android.view.MenuItem
 import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.preference.ListPreference
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -127,6 +131,46 @@ class WordListActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         val searchView = menuItem?.actionView as SearchView
         searchView.setOnQueryTextListener(this)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        // 색상 세팅 메뉴
+        2131296822 -> {
+            /*val builder = AlertDialog.Builder(this)
+            builder.setTitle("선택")
+            val test_value = R.array.setting_color_values
+            test_value
+            var itemList = resources.getStringArray(R.array.setting_color_values)
+
+            var checkedItemIndex = 0 // 선택된 항목을 저장하는 변수
+
+            builder.setSingleChoiceItems(itemList, checkedItemIndex) { dialog, which ->
+                checkedItemIndex = which
+            }
+
+            builder.setPositiveButton("확인") { dialog, which ->
+                val prefs2 = PreferenceManager.getDefaultSharedPreferences(this)
+                prefs2.edit().run {
+                    putString("color", itemList[checkedItemIndex])
+                }
+                //prefs.setString("color", itemList[checkedItemIndex])
+                Log.d("Leraedon", itemList[checkedItemIndex])
+                binding.wordsRecycler.adapter = WordAdapter(this, original_datas)
+            }
+            builder.setNegativeButton("취소") { dialog, which ->
+
+            }
+
+            builder.show()*/
+            val intent: Intent = Intent(this, SettingActivity::class.java)
+            startActivity(intent)
+
+            true
+        }
+        else -> {
+            Log.d("Leraedon", item.itemId.toString())
+            super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
