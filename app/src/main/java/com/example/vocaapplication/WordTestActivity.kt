@@ -10,6 +10,20 @@ import com.example.vocaapplication.databinding.ActivityWordTestBinding
 import com.example.vocaapplication.databinding.FragmentTestIntroBinding
 
 class WordTestActivity : AppCompatActivity() {
+
+    interface onBackPressedListener {
+        fun onBackPressed()
+    }
+
+    /*override fun onBackPressed() {
+        val fragmentList = supportFragmentManager.fragments
+        for(fragment in fragmentList) {
+            if(fragment is onBackPressedListener) {
+                (fragment as onBackPressedListener).onBackPressed()
+                return
+            }
+        }
+    }*/
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityWordTestBinding.inflate(layoutInflater)

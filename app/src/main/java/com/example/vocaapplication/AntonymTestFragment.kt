@@ -1,17 +1,29 @@
 package com.example.vocaapplication
 
+import android.app.AlertDialog
+import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
+import android.os.CountDownTimer
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.activity.OnBackPressedCallback
+import androidx.preference.PreferenceManager
 import com.example.vocaapplication.databinding.FragmentAntonymTestBinding
 import org.json.JSONArray
 
 class AntonymTestFragment : Fragment() {
     lateinit var binding: FragmentAntonymTestBinding
+    lateinit var prefs: SharedPreferences
+    lateinit var countDownTimer: CountDownTimer
+    lateinit var callback: OnBackPressedCallback
+    private val TIMED_OUT = 4801
     private var daynum: Int? = null
     private var quantity: Int? = null
     private var minWordIndex: Int? = null
@@ -45,6 +57,36 @@ class AntonymTestFragment : Fragment() {
         return binding.root
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object: OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val eventHandler = DialogInterface.OnClickListener { dialog, which ->
+                    if(which == DialogInterface.BUTTON_POSITIVE) {
+                        countDownTimer.cancel()
+                        requireActivity().supportFragmentManager.beginTransaction()
+                            .remove(this@AntonymTestFragment)
+                            .commit()
+                        requireActivity().supportFragmentManager.popBackStack()
+                    }
+                }
+
+                AlertDialog.Builder(context).run {
+                    setTitle("종료 확인")
+                    setMessage("테스트를 중지하고 나가시겠습니까?")
+                    setPositiveButton("YES", eventHandler)
+                    setNegativeButton("NO", eventHandler)
+                    show()
+                }
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
+    }
     private fun startTest() {
         // 다음 문제로 가는 버튼, 결과 텍스트 가리기
         binding.nextButton.visibility = View.GONE
@@ -97,6 +139,29 @@ class AntonymTestFragment : Fragment() {
         val word = jsonObject.getString("word")
         binding.subjectWord.text = word
 
+        prefs = context?.let { PreferenceManager.getDefaultSharedPreferences(it) }!!
+        val timerValue = prefs?.getString("timer", "None")
+
+        if(timerValue == "None") {
+            binding.countDown.visibility = View.GONE
+            //Log.d("Leraedon", "1")
+        } else {
+            binding.countDown.visibility = View.VISIBLE
+            binding.countDown.text = timerValue
+            //Log.d("Leraedon", "2")
+            countDownTimer = object : CountDownTimer((timerValue?.toLong()?.times(1000))!!, 1000) {
+                override fun onTick(p0: Long) {
+                    binding.countDown.text = (p0 / 1000).toString()
+                }
+
+                override fun onFinish() {
+                    timedOut(answerIndex)
+                }
+
+            }.start()
+
+        }
+
         //배열을 다시 섞어서 4개 선지에 랜덤하게 뜻을 배치
         randomList = randomList.shuffled()
         setWordTestAnswer(binding.answerButton1, randomList[0], answerIndex)
@@ -135,6 +200,8 @@ class AntonymTestFragment : Fragment() {
             button.text = word
         }
         button.setOnClickListener {
+            prefs = context?.let { PreferenceManager.getDefaultSharedPreferences(it) }!!
+            if(prefs?.getString("timer", "None") != "None") countDownTimer.cancel()
             val buttons = arrayListOf(binding.answerButton1, binding.answerButton2, binding.answerButton3, binding.answerButton4)
             // 다음 퀴즈로 넘어가기 전까지 클릭 이벤트 제거
             for(btn in buttons)  btn.isClickable = false
@@ -155,5 +222,25 @@ class AntonymTestFragment : Fragment() {
             previous_answers.add(answerIndex)
             selected_answers.add(index)
         }
+    }
+
+    private fun timedOut(answerIndex: Int) {
+        prefs = context?.let { PreferenceManager.getDefaultSharedPreferences(it) }!!
+        if(prefs?.getString("timer", "None") != "None") countDownTimer.cancel()
+
+        val buttons = arrayListOf(binding.answerButton1, binding.answerButton2, binding.answerButton3, binding.answerButton4)
+        // 다음 퀴즈로 넘어가기 전까지 클릭 이벤트 제거
+        for(btn in buttons) {
+            btn.isClickable = false
+            btn.setBackgroundColor(Color.rgb(225, 30, 0))
+        }
+        binding.resultText.text = "Timed Out!\n"
+        binding.resultText.setTextColor(Color.rgb(225, 30, 0))
+        // 결과 텍스트와 다음 퀴즈로 넘어가기 버튼 활성화
+        binding.nextButton.visibility = View.VISIBLE
+        binding.resultText.visibility = View.VISIBLE
+        questions_count = questions_count!! + 1
+        previous_answers.add(answerIndex)
+        selected_answers.add(TIMED_OUT)
     }
 }

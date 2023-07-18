@@ -1,5 +1,9 @@
 package com.example.vocaapplication
 
+import android.app.AlertDialog
+import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
@@ -10,15 +14,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.activity.OnBackPressedCallback
 import androidx.preference.PreferenceManager
 import com.example.vocaapplication.databinding.FragmentWordTestBinding
 import org.json.JSONArray
 import kotlin.random.Random
 
-class WordTestFragment : Fragment() {
+class WordTestFragment : Fragment()/*, WordTestActivity.onBackPressedListener*/ {
     lateinit var binding: FragmentWordTestBinding
     lateinit var prefs: SharedPreferences
     lateinit var countDownTimer: CountDownTimer
+    lateinit var callback: OnBackPressedCallback
     private var daynum: Int? = null
     private var quantity: Int? = null
     private var minWordIndex: Int? = null
@@ -108,6 +114,60 @@ class WordTestFragment : Fragment() {
         // Inflate the layout for this fragment
         return binding.root
     }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object: OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val eventHandler = DialogInterface.OnClickListener { dialog, which ->
+                    if(which == DialogInterface.BUTTON_POSITIVE) {
+                        countDownTimer.cancel()
+                        requireActivity().supportFragmentManager.beginTransaction()
+                            .remove(this@WordTestFragment)
+                            .commit()
+                        requireActivity().supportFragmentManager.popBackStack()
+                    }
+                }
+
+                AlertDialog.Builder(context).run {
+                    setTitle("종료 확인")
+                    setMessage("테스트를 중지하고 나가시겠습니까?")
+                    setPositiveButton("YES", eventHandler)
+                    setNegativeButton("NO", eventHandler)
+                    show()
+                }
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
+    }
+
+    /*override fun onBackPressed() {
+        val fragment = this
+        val eventHandler = DialogInterface.OnClickListener { dialog, which ->
+            if(which == DialogInterface.BUTTON_POSITIVE) {
+                requireActivity().supportFragmentManager.beginTransaction().remove(fragment).commit()
+                requireActivity().supportFragmentManager.popBackStack()
+
+                val intent = Intent(getActivity(), DaySelectActivity::class.java)
+                intent.putExtra("test_type", "word_test")
+                startActivity(intent)
+            }
+        }
+        Log.d("Leraedon", "?")
+        AlertDialog.Builder(context).run {
+            setTitle("종료 확인")
+            setMessage("테스트를 중지하고 나가시겠습니까?")
+            setPositiveButton("YES", eventHandler)
+            setNegativeButton("NO", eventHandler)
+            show()
+        }
+
+    }*/
 
     private fun startTest() {
         // 다음 문제로 가는 버튼, 결과 텍스트 가리기

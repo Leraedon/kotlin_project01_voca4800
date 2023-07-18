@@ -2988,15 +2988,15 @@
     {
       "num": 408,
       "word": "prejudice",
-      "definitions": ["보이지 않는"],
-      "synonyms": ["imperceptible"],
+      "definitions": ["편견", "선입견"],
+      "synonyms": ["bias", "inequity"],
       "antonyms": []
     },
 
     {
       "num": 409,
       "word": "definitely",
-      "definitions": ["bias", "inequity"],
+      "definitions": ["분명히", "틀림없이"],
       "synonyms": ["certainly"],
       "antonyms": []
     },

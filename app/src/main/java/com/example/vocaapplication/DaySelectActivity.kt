@@ -55,7 +55,8 @@ class DaySelectActivity : AppCompatActivity() {
                 val btn = Button(this)
 
                 btn.text = "Day ${5*(i-1)+1} ~ Day ${5*i}"
-                btn.height = 76.dp
+                btn.height = 70.dp
+                btn.width = 350.dp
                 btn.setBackgroundColor(getResources().getColor(R.color.yellow_theme))
                 btn.setTextColor(getResources().getColor(R.color.cyan_theme))
                 btn.setTextSize(Dimension.SP, 22F)
@@ -83,10 +84,10 @@ class DaySelectActivity : AppCompatActivity() {
                     btn.setBackgroundColor(getResources().getColor(R.color.yellow_theme))
                     btn.setTextColor(getResources().getColor(R.color.cyan_theme))
                     btn.setTextSize(Dimension.SP, 22F)
-                    val layoutParams = TableLayout.LayoutParams(
+                    /*val layoutParams = TableLayout.LayoutParams(
                         TableLayout.LayoutParams.WRAP_CONTENT,
                         TableLayout.LayoutParams.WRAP_CONTENT
-                    )
+                    )*/
                     //layoutParams.setMargins(5.dp, 5.dp, 5.dp, 0)
                     //btn.layoutParams = layoutParams
                     btn.setOnClickListener {
