@@ -121,7 +121,8 @@ class WordTestFragment : Fragment()/*, WordTestActivity.onBackPressedListener*/ 
             override fun handleOnBackPressed() {
                 val eventHandler = DialogInterface.OnClickListener { dialog, which ->
                     if(which == DialogInterface.BUTTON_POSITIVE) {
-                        countDownTimer.cancel()
+                        prefs = context?.let { PreferenceManager.getDefaultSharedPreferences(it) }!!
+                        if(prefs?.getString("timer", "None") != "None") countDownTimer.cancel()
                         requireActivity().supportFragmentManager.beginTransaction()
                             .remove(this@WordTestFragment)
                             .commit()
